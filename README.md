@@ -37,7 +37,7 @@ The database will be automatically initialized with the provided `init.sql` scri
 
 - To add a test result, you can use the web interface or send a GET request to the following endpoint:
 
-  ```
+  ```bash
   http://localhost:8080/index.php?action=add&testName=yourTestName&value=yourValue
   ```
   
