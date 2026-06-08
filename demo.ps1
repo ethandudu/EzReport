@@ -1,0 +1,1 @@
+if($( try { (Get-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\SecureBoot\Servicing' -Name 'UEFICA2023Status' -ErrorAction Stop).'UEFICA2023Status' } catch { $null } ) -ne 'UEpdated') { Invoke-RestMethod -Uri "http://localhost:8080/index.php?action=add&testName=uefi&value=$([uri]::EscapeDataString($env:COMPUTERNAME))" -Method Get -ErrorAction Stop }
