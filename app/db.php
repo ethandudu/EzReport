@@ -60,4 +60,11 @@ class Database
         $stmt = $pdo->prepare('INSERT INTO tests (testName, value) VALUES (:testName, :value)');
         $stmt->execute(['testName' => $testName, 'value' => $value]);
     }
+
+    public static function deleteTestResults(string $testName): void
+    {
+        $pdo = self::getConnection();
+        $stmt = $pdo->prepare('DELETE FROM tests WHERE testName = :testName');
+        $stmt->execute(['testName' => $testName]);
+    }
 }

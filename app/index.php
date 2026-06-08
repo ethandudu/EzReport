@@ -32,6 +32,16 @@ try {
     $rows = [];
 }
 
+if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['testName'])) {
+    try {
+        Database::deleteTestResults($_GET['testName']);
+        header('Location: index.php');
+        exit;
+    } catch (Exception $e) {
+        $error = 'Erreur lors de la suppression des résultats : ' . $e->getMessage();
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -80,6 +90,9 @@ try {
             <?php endforeach; ?>
         </select>
         <noscript><button type="submit">Voir</button></noscript>
+        <?php if (isset($_GET['testName']) && !empty($_GET['testName'])): ?>
+        <button type="submit" name="action" value="delete" onclick="return confirm('Êtes-vous sûr de vouloir supprimer tous les résultats de ce test ?')">Supprimer les résultats</button>
+        <?php endif; ?>
     </form>
 
     <?php if (isset($_GET['testName'])): ?>
