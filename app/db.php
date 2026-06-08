@@ -50,7 +50,7 @@ class Database
     {
         $pdo = self::getConnection();
         $stmt = $pdo->prepare('SELECT * FROM tests WHERE testName = :testName ORDER BY timestamp DESC');
-        $stmt->execute(['testName' => $testName]);
+        $stmt->execute(['testName' => self::sanitize($testName)]);
         return $stmt->fetchAll();
     }
 
@@ -58,13 +58,18 @@ class Database
     {
         $pdo = self::getConnection();
         $stmt = $pdo->prepare('INSERT INTO tests (testName, value) VALUES (:testName, :value)');
-        $stmt->execute(['testName' => $testName, 'value' => $value]);
+        $stmt->execute(['testName' => self::sanitize($testName), 'value' => self::sanitize($value)]);
     }
 
     public static function deleteTestResults(string $testName): void
     {
         $pdo = self::getConnection();
         $stmt = $pdo->prepare('DELETE FROM tests WHERE testName = :testName');
-        $stmt->execute(['testName' => $testName]);
+        $stmt->execute(['testName' => self::sanitize($testName)]);
+    }
+
+    private static function sanitize(string $input): string
+    {
+        return trim(htmlspecialchars($input, ENT_QUOTES, 'UTF-8'));
     }
 }
