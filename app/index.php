@@ -1,7 +1,6 @@
 <?php
 require_once __DIR__ . '/db.php';
 
-$pdo = Database::getConnection();
 $error = '';
 
 if (isset($_GET['action']) && $_GET['action'] === 'add' && isset($_GET['testName']) && isset($_GET['value'])) {
